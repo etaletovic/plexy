@@ -3,7 +3,7 @@ import XCTest
 
 final class plexyTests: XCTestCase {
     func testGetIdentity() {
-       
+        
         let gotResponse = expectation(description: "Got Response")
         var identity: Identity? = nil
         
@@ -14,11 +14,11 @@ final class plexyTests: XCTestCase {
         
         waitForExpectations(timeout: 5, handler: nil)
         XCTAssertNotNil(identity?.MediaContainer)
-
+        
     }
     
     func testSignIn() {
-
+        
         let gotResponse = expectation(description: "Got Response")
         var response: SignInResponse? = nil
         
@@ -30,11 +30,11 @@ final class plexyTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
         XCTAssertNotNil(response?.user)
         XCTAssertFalse(response!.user.authToken.isEmpty)
-
+        
     }
-
+    
     static var allTests = [
-    ("testGetIdentity", testGetIdentity),
-    ("testSignIn", testSignIn),
+        ("testGetIdentity", testGetIdentity),
+        ("testSignIn", testSignIn),
     ]
 }
