@@ -4,7 +4,8 @@ import XCTest
 
 final class plexyTests: XCTestCase {
     
-    static let token = ""
+    static var token =
+        ProcessInfo.processInfo.environment["plexToken"] ?? ""
     
     func testGetIdentity() {
         let gotResponse = expectation(description: "gresp")
