@@ -7,11 +7,11 @@
 
 import Foundation
 
-public struct Identity: Codable {
-    let MediaContainer: MediaContainer
+public struct IdentityResponse: Codable {
+    let MediaContainer: IdentityContainer
 }
 
-public struct MediaContainer : Codable {
+public struct IdentityContainer : Codable {
     let size: Int
     let claimed: Bool
     let machineIdentifier: String
