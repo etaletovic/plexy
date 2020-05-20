@@ -52,7 +52,7 @@ public struct Item: Codable {
     let duration: Int?
     let addedAt: Int?
     let updatedAt: Int?
-    let Media: [Media]?
+    let Media: [Media]
     
 }
 

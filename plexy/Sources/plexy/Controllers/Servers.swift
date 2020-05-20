@@ -14,13 +14,15 @@ public extension plexy {
         
         private init() {}
         
-        public static func getServers(token: String, completionHandler: @escaping (ServersResponse?) -> Void) {
+        public static func getServers(token: String = "", completionHandler: @escaping (ServersResponse?) -> Void) {
             
+            let authToken = token.isEmpty ? plexy.token : token
+
             let endpoint = "\(plexy.baseUrl):\(plexy.port)/servers"
             
             let headers: HTTPHeaders = [
                 .accept("application/json"),
-                .init(name: "X-Plex-Token", value: token)
+                .init(name: "X-Plex-Token", value: authToken)
                 
             ]
             
