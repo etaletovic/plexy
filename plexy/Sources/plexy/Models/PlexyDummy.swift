@@ -7,4 +7,4 @@
 
 import Foundation
 
-struct PlexyDummy : Codable {}
+struct PlexyDummy: Codable {}

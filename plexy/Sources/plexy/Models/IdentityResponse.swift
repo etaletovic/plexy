@@ -11,7 +11,7 @@ public struct IdentityResponse: Codable {
     let MediaContainer: IdentityContainer
 }
 
-public struct IdentityContainer : Codable {
+public struct IdentityContainer: Codable {
     let size: Int
     let claimed: Bool
     let machineIdentifier: String

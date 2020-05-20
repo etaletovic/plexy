@@ -19,18 +19,18 @@ public extension Part {
             .accept("application/json"),
             .init(name: "X-Plex-Token", value: authToken)
         ]
-        
+
         let destination: DownloadRequest.Destination = { _, _ in
             let destinationFileUrl = to
-            
+
             return (destinationFileUrl, [.removePreviousFile, .createIntermediateDirectories])
         }
-        
+
         AF.download(sourceUrl, headers: headers, to: destination)
             .downloadProgress { p in
-                
+
                 if p.fractionCompleted >= 1 { return }
-                
+
                 progress(Int(p.fractionCompleted * 100))
 
             }

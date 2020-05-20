@@ -24,4 +24,3 @@ public struct Server: Codable {
     let machineIdentifier: String
     let version: String
 }
-

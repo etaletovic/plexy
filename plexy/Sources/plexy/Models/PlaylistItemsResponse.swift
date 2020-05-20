@@ -53,7 +53,7 @@ public struct Item: Codable {
     let addedAt: Int?
     let updatedAt: Int?
     let Media: [Media]
-    
+
 }
 
 public struct Media: Codable {
@@ -73,5 +73,5 @@ public struct Part: Codable {
     let file: String
     let size: Int
     let container: String
-    
+
 }
