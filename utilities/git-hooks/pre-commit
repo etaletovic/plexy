@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+def swift_lint
+
+	system("swiftlint > /dev/null")
+
+	if $? == 0
+		puts "swiftlint passed"
+		return true
+	else
+		puts "swiftlint failed"
+		return false
+	end	
+end
+
+if __FILE__ == $0
+	lint = swift_lint
+	exit(lint ? 0 : 1)
+end

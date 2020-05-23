@@ -8,12 +8,12 @@
 import Foundation
 
 public struct PlaylistsResponse: Codable {
-    let MediaContainer: PlaylistsContainer
+    let mediaContainer: PlaylistsContainer
 }
 
 public struct PlaylistsContainer: Codable {
     let size: Int
-    let Metadata: [Playlist]
+    let metadata: [Playlist]
 }
 
 public struct Playlist: Codable {

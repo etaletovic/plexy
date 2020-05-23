@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-public extension plexy {
+public extension Plexy {
 
     struct Servers {
 
@@ -16,9 +16,9 @@ public extension plexy {
 
         public static func getServers(token: String = "", completionHandler: @escaping (ServersResponse?) -> Void) {
 
-            let authToken = token.isEmpty ? plexy.token : token
+            let authToken = token.isEmpty ? Plexy.token : token
 
-            let endpoint = "\(plexy.baseUrl):\(plexy.port)/servers"
+            let endpoint = "\(Plexy.baseUrl):\(Plexy.port)/servers"
 
             let headers: HTTPHeaders = [
                 .accept("application/json"),

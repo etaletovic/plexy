@@ -3,5 +3,5 @@ import XCTest
 import plexyTests
 
 var tests = [XCTestCaseEntry]()
-tests += plexyTests.allTests()
+tests += PlexyTests.allTests()
 XCTMain(tests)

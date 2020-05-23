@@ -12,15 +12,14 @@ public struct SignInResponse: Codable {
 }
 
 public struct User: Codable {
-    let id: Int64
+    let identifier: Int64
     let uuid: String
     let email: String
-    let joined_at: String
+    let joinedAt: String
     let username: String
     let title: String
     let thumb: String
     let hasPassword: Bool
     let authToken: String
-    let authentication_token: String
-
+    let authenticationToken: String
 }

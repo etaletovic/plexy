@@ -8,7 +8,7 @@
 import Foundation
 
 public struct IdentityResponse: Codable {
-    let MediaContainer: IdentityContainer
+    let mediaContainer: IdentityContainer
 }
 
 public struct IdentityContainer: Codable {

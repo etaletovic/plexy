@@ -8,12 +8,12 @@
 import Foundation
 
 public struct ServersResponse: Codable {
-    let MediaContainer: ServersContainer
+    let mediaContainer: ServersContainer
 }
 
 public struct ServersContainer: Codable {
     let size: Int
-    let Server: [Server]
+    let server: [Server]
 }
 
 public struct Server: Codable {

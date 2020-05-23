@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-public extension plexy {
+public extension Plexy {
 
     struct Identity {
 
@@ -16,7 +16,7 @@ public extension plexy {
 
         static func getIdentity(completionHandler: @escaping (IdentityResponse?) -> Void) {
 
-            let endpoint = "\(plexy.baseUrl):\(plexy.port)/identity"
+            let endpoint = "\(Plexy.baseUrl):\(Plexy.port)/identity"
 
             let headers: HTTPHeaders = [ .accept("application/json") ]
 

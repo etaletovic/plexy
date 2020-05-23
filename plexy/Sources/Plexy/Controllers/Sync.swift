@@ -9,11 +9,11 @@ import Foundation
 import Alamofire
 
 public extension Part {
-    func download(token: String = "", to: URL, _ progress: @escaping (Int) -> Void) {
+    func download(token: String = "", saveTo: URL, _ progress: @escaping (Int) -> Void) {
 
-        let authToken = token.isEmpty ? plexy.token : token
+        let authToken = token.isEmpty ? Plexy.token : token
 
-        let sourceUrl = "\(plexy.baseUrl):\(plexy.port)\(self.key)?download=1"
+        let sourceUrl = "\(Plexy.baseUrl):\(Plexy.port)\(self.key)?download=1"
 
         let headers: HTTPHeaders = [
             .accept("application/json"),
@@ -21,17 +21,17 @@ public extension Part {
         ]
 
         let destination: DownloadRequest.Destination = { _, _ in
-            let destinationFileUrl = to
+            let destinationFileUrl = saveTo
 
             return (destinationFileUrl, [.removePreviousFile, .createIntermediateDirectories])
         }
 
         AF.download(sourceUrl, headers: headers, to: destination)
-            .downloadProgress { p in
+            .downloadProgress { prog in
 
-                if p.fractionCompleted >= 1 { return }
+                if prog.fractionCompleted >= 1 { return }
 
-                progress(Int(p.fractionCompleted * 100))
+                progress(Int(prog.fractionCompleted * 100))
 
             }
             .response { response in

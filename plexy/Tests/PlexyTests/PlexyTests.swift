@@ -1,28 +1,28 @@
 import XCTest
 import Foundation
-@testable import plexy
+@testable import Plexy
 
-final class plexyTests: XCTestCase {
+final class PlexyTests: XCTestCase {
 
     override class func setUp() { // 1.
         super.setUp()
         // This is the setUp() class method.
         // It is called before the first test method begins.
         // Set up any overall initial state here.
-        plexy.token = ProcessInfo.processInfo.environment["plexToken"] ?? ""
+        Plexy.token = ProcessInfo.processInfo.environment["plexToken"] ?? ""
     }
 
     func testGetIdentity() {
         let gotResponse = expectation(description: "gresp")
-        var identity: IdentityResponse?
+        var response: IdentityResponse?
 
-        plexy.Identity.getIdentity { i in
-            identity = i
+        Plexy.Identity.getIdentity { identity in
+            response = identity
             gotResponse.fulfill()
         }
 
         waitForExpectations(timeout: 5, handler: nil)
-        XCTAssertNotNil(identity?.MediaContainer)
+        XCTAssertNotNil(response?.mediaContainer)
 
     }
 
@@ -31,8 +31,8 @@ final class plexyTests: XCTestCase {
         let gotResponse = expectation(description: "gresp")
         var response: ServersResponse?
 
-        plexy.Servers.getServers(token: plexy.token) { i in
-            response = i
+        Plexy.Servers.getServers { servers in
+            response = servers
             gotResponse.fulfill()
         }
 
@@ -46,20 +46,20 @@ final class plexyTests: XCTestCase {
         let gotResponse = expectation(description: "gresp")
         var response: PlaylistsResponse?
 
-        plexy.Playlists.getAll { i in
-            response = i
+        Plexy.Playlists.getAll { playlists in
+            response = playlists
             gotResponse.fulfill()
         }
 
         waitForExpectations(timeout: 5, handler: nil)
 
-        guard let r = response else {
+        guard let res = response else {
             XCTFail("Response is nil")
             return
         }
 
-        XCTAssertTrue(r.MediaContainer.size > 0)
-        XCTAssertTrue(r.MediaContainer.Metadata.count > 0)
+        XCTAssertTrue(res.mediaContainer.size > 0)
+        XCTAssertTrue(res.mediaContainer.metadata.count > 0)
 
     }
 
@@ -68,20 +68,20 @@ final class plexyTests: XCTestCase {
         let gotResponse = expectation(description: "gresp")
         var response: PlaylistItemsResponse?
 
-        plexy.Playlists.getItems(token: plexy.token, ratingKey: "10") { i in
-            response = i
+        Plexy.Playlists.getItems(ratingKey: "10") { items in
+            response = items
             gotResponse.fulfill()
         }
 
         waitForExpectations(timeout: 5, handler: nil)
 
-        guard let r = response else {
+        guard let res = response else {
             XCTFail("Response is nil")
             return
         }
 
-        XCTAssertTrue(r.MediaContainer.size > 0)
-        XCTAssertTrue(r.MediaContainer.Metadata.count > 0)
+        XCTAssertTrue(res.mediaContainer.size > 0)
+        XCTAssertTrue(res.mediaContainer.metadata.count > 0)
     }
 
     func testSignIn() {
@@ -89,63 +89,59 @@ final class plexyTests: XCTestCase {
         let gotResponse = expectation(description: "Got Response")
         var response: SignInResponse?
 
-        plexy.Auth.getToken(username: "", password: "") { i in
-            response = i
+        Plexy.Auth.getToken(username: "", password: "") { token in
+            response = token
             gotResponse.fulfill()
         }
 
         waitForExpectations(timeout: 5, handler: nil)
 
-        guard let r = response else {
+        guard let res = response else {
             XCTFail("Response is nil")
             return
         }
 
-        XCTAssertFalse(r.user.authToken.isEmpty)
+        XCTAssertFalse(res.user.authToken.isEmpty)
 
     }
 
     func testFileDownload() {
         let playlistId = "11"
-        var documentsDir = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask)[0]
+        let documentsDir = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask)[0]
 
         let gotResponse = expectation(description: "gresp")
         var response: PlaylistItemsResponse?
 
-        plexy.Playlists.getItems(token: plexy.token, ratingKey: playlistId) { i in
-            response = i
+        Plexy.Playlists.getItems(ratingKey: playlistId) { items in
+            response = items
             gotResponse.fulfill()
         }
 
         wait(for: [gotResponse], timeout: 5)
 
-        guard let r = response else {
+        guard let res = response else {
             XCTFail("Response is nil")
             return
         }
 
-        guard let item = r.MediaContainer.Metadata.first(where: { i in
-            i.Media.count > 0
+        guard let item = res.mediaContainer.metadata.first(where: { meta in
+            meta.media.count > 0
         }) else {
             XCTFail("Metadata not found")
             return
         }
 
-        guard let media = item.Media.first else {
+        guard let media = item.media.first else {
             XCTFail("Media not found")
             return
         }
 
-        guard let part = media.Part.first else {
+        guard let part = media.part.first else {
             XCTFail("Part not found")
             return
         }
 
-        var title = "Unknown"
-
-        if let t = item.title {
-            title = t
-        }
+        let title = item.title ?? "Unknown"
 
         let saveDestination = documentsDir.appendingPathComponent(title).appendingPathExtension(part.container)
 
@@ -153,9 +149,9 @@ final class plexyTests: XCTestCase {
 
         let fileDownloaded = expectation(description: "fdown")
 
-        item.Media.forEach { m in
-            m.Part.forEach { p in
-                p.download(token: plexy.token, to: saveDestination) { progress in
+        item.media.forEach { media in
+            media.part.forEach { part in
+                part.download(saveTo: saveDestination) { progress in
                     if progress == 100 {
                         fileDownloaded.fulfill()
                     }

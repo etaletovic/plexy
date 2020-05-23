@@ -8,7 +8,7 @@
 import Foundation
 
 public struct PlaylistItemsResponse: Codable {
-    let MediaContainer: PlaylistItemsContainer
+    let mediaContainer: PlaylistItemsContainer
 }
 
 public struct PlaylistItemsContainer: Codable {
@@ -20,7 +20,7 @@ public struct PlaylistItemsContainer: Codable {
     let ratingKey: String
     let smart: Bool
     let title: String
-    let Metadata: [Item]
+    let metadata: [Item]
 }
 
 public struct Item: Codable {
@@ -52,7 +52,7 @@ public struct Item: Codable {
     let duration: Int?
     let addedAt: Int?
     let updatedAt: Int?
-    let Media: [Media]
+    let media: [Media]
 
 }
 
@@ -63,7 +63,7 @@ public struct Media: Codable {
     let audioChannels: Int
     let audioCodec: String
     let container: String
-    let Part: [Part]
+    let part: [Part]
 }
 
 public struct Part: Codable {

@@ -8,13 +8,15 @@
 import Foundation
 import Alamofire
 
-public extension plexy {
+public extension Plexy {
 
     struct Auth {
 
         private init() {}
 
-        public static func getToken(username: String, password: String, completionHandler: @escaping (SignInResponse?) -> Void) {
+        public static func getToken(username: String,
+                                    password: String,
+                                    completionHandler: @escaping (SignInResponse?) -> Void) {
             let endpoint = "https://plex.tv/users/sign_in.json"
             let headers: HTTPHeaders = [
                 .accept("application/json"),
@@ -29,7 +31,11 @@ public extension plexy {
                 "user[password]": password
             ]
 
-            Requests.request(endpoint, method: .post, parameters: parameters, headers: headers, completionHandler: completionHandler)
+            Requests.request(endpoint,
+                             method: .post,
+                             parameters: parameters,
+                             headers: headers,
+                             completionHandler: completionHandler)
         }
     }
 }
