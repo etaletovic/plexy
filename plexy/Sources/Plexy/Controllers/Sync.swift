@@ -11,7 +11,7 @@ import Alamofire
 public extension Part {
     func download(token: String = "", saveTo: URL, _ progress: @escaping (Int) -> Void) {
 
-        let authToken = token.isEmpty ? Plexy.token : token
+        let authToken = token.isEmpty ? Plexy.Auth.token : token
 
         let sourceUrl = "\(Plexy.baseUrl):\(Plexy.port)\(self.key)?download=1"
 

@@ -16,7 +16,7 @@ public extension Plexy {
 
         public static func getServers(token: String = "", completionHandler: @escaping (ServersResponse?) -> Void) {
 
-            let authToken = token.isEmpty ? Plexy.token : token
+            let authToken = token.isEmpty ? Plexy.Auth.token : token
 
             let endpoint = "\(Plexy.baseUrl):\(Plexy.port)/servers"
 

@@ -16,7 +16,7 @@ public extension Plexy {
 
         static func getAll(token: String = "", completionHandler: @escaping (PlaylistsResponse?) -> Void) {
 
-            let authToken = token.isEmpty ? Plexy.token : token
+            let authToken = token.isEmpty ? Plexy.Auth.token : token
 
             let endpoint = "\(Plexy.baseUrl):\(Plexy.port)/playlists"
 
@@ -34,7 +34,7 @@ public extension Plexy {
                         ratingKey: String,
                         completionHandler: @escaping (PlaylistsResponse?) -> Void) {
 
-            let authToken = token.isEmpty ? Plexy.token : token
+            let authToken = token.isEmpty ? Plexy.Auth.token : token
 
             let endpoint = "\(Plexy.baseUrl):\(Plexy.port)/playlists/\(ratingKey)"
 
@@ -52,7 +52,7 @@ public extension Plexy {
                              ratingKey: String,
                              completionHandler: @escaping (PlaylistItemsResponse?) -> Void) {
 
-            let authToken = token.isEmpty ? Plexy.token : token
+            let authToken = token.isEmpty ? Plexy.Auth.token : token
 
             let endpoint = "\(Plexy.baseUrl):\(Plexy.port)/playlists/\(ratingKey)/items"
 

@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-public extension Plexy {
+public extension Plexy.Tv {
 
     struct Auth {
 
@@ -21,9 +21,8 @@ public extension Plexy {
             let headers: HTTPHeaders = [
                 .accept("application/json"),
                 .contentType("application/x-www-form-urlencoded"),
-                .init(name: "X-Plex-Version", value: "1.0.0"),
-                .init(name: "X-Plex-Product", value: "plexy"),
-                .init(name: "X-Plex-Client-Identifier", value: "plexy")
+                .init(name: "X-Plex-Product", value: Plexy.productId),
+                .init(name: "X-Plex-Client-Identifier", value: Plexy.clientIdentifier)
             ]
 
             let parameters = [

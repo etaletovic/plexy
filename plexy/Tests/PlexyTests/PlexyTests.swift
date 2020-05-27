@@ -9,7 +9,7 @@ final class PlexyTests: XCTestCase {
         // This is the setUp() class method.
         // It is called before the first test method begins.
         // Set up any overall initial state here.
-        Plexy.token = ProcessInfo.processInfo.environment["plexToken"] ?? ""
+        Plexy.Auth.token = ProcessInfo.processInfo.environment["plexToken"] ?? ""
     }
 
     func testGetIdentity() {
@@ -84,27 +84,6 @@ final class PlexyTests: XCTestCase {
         XCTAssertTrue(res.mediaContainer.metadata.count > 0)
     }
 
-    func testSignIn() {
-
-        let gotResponse = expectation(description: "Got Response")
-        var response: SignInResponse?
-
-        Plexy.Auth.getToken(username: "", password: "") { token in
-            response = token
-            gotResponse.fulfill()
-        }
-
-        waitForExpectations(timeout: 5, handler: nil)
-
-        guard let res = response else {
-            XCTFail("Response is nil")
-            return
-        }
-
-        XCTAssertFalse(res.user.authToken.isEmpty)
-
-    }
-
     func testFileDownload() {
         let playlistId = "11"
         let documentsDir = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask)[0]
@@ -163,7 +142,6 @@ final class PlexyTests: XCTestCase {
     }
 
     static var allTests = [
-        ("testGetIdentity", testGetIdentity),
-        ("testSignIn", testSignIn)
+        ("testGetIdentity", testGetIdentity)
     ]
 }

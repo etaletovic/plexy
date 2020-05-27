@@ -12,7 +12,7 @@ public struct SignInResponse: Codable {
 }
 
 public struct User: Codable {
-    let identifier: Int64
+    let id: Int64
     let uuid: String
     let email: String
     let joinedAt: String
