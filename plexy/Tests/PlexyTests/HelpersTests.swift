@@ -46,7 +46,7 @@ final class HelpersTests: XCTestCase {
         """.data(using: .utf8)!
 
         let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = Serialization.DecodingStrategy.plexyDecodingStrategy
+        decoder.keyDecodingStrategy = .convertFromSnakeCaseAndCamelCase
 
         guard let person = try? decoder.decode(Person.self, from: json) else {
             XCTFail("Failed to deserialize root")

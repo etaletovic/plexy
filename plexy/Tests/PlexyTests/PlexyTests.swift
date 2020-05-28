@@ -140,8 +140,4 @@ final class PlexyTests: XCTestCase {
 
         wait(for: [fileDownloaded], timeout: 10)
     }
-
-    static var allTests = [
-        ("testGetIdentity", testGetIdentity)
-    ]
 }
