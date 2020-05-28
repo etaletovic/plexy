@@ -51,8 +51,7 @@ public struct Requests {
 
     private static func initDecoder() -> JSONDecoder {
         let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = Serialization.DecodingStrategy.pascalDecodingStrategy
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        decoder.keyDecodingStrategy = Serialization.DecodingStrategy.plexyDecodingStrategy
         return decoder
     }
 

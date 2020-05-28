@@ -9,4 +9,5 @@ import Foundation
 
 extension StringProtocol {
     var decapitalized: String { prefix(1).lowercased() + dropFirst() }
+    var capitalized: String { prefix(1).uppercased() + dropFirst() }
 }

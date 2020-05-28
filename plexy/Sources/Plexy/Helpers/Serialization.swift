@@ -9,7 +9,16 @@ import Foundation
 
 struct Serialization {
     struct DecodingStrategy {
-        static var pascalDecodingStrategy: JSONDecoder.KeyDecodingStrategy {
+
+        private static func toCamelCase(_ value: String) -> String {
+            value
+                .split(separator: "_", omittingEmptySubsequences: true)
+                .map { part in part.capitalized }
+                .joined()
+                .decapitalized
+        }
+
+        static var plexyDecodingStrategy: JSONDecoder.KeyDecodingStrategy {
             .custom { keys in
 
                 let key = keys.last!
@@ -17,7 +26,10 @@ struct Serialization {
                 if let intValue = key.intValue {
                     return AnyKey(intValue: intValue)!
                 }
-                return AnyKey(stringValue: key.stringValue.decapitalized)!
+
+                let decoded = toCamelCase(key.stringValue)
+
+                return AnyKey(stringValue: decoded)!
             }
         }
     }

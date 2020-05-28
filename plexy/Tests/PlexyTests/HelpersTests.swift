@@ -34,15 +34,19 @@ final class HelpersTests: XCTestCase {
         {
             "Name": "X",
             "Age": 30,
+            "favorite_pet": "dog",
+            "BestFriend": "Jake",
             "Child": {
                 "Age": 5,
-                "Name": "Y"
+                "Name": "Y",
+                "favorite_pet" : "cat",
+                "BestFriend" : null
             }
         }
         """.data(using: .utf8)!
 
         let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = Serialization.DecodingStrategy.pascalDecodingStrategy
+        decoder.keyDecodingStrategy = Serialization.DecodingStrategy.plexyDecodingStrategy
 
         guard let person = try? decoder.decode(Person.self, from: json) else {
             XCTFail("Failed to deserialize root")
@@ -67,7 +71,8 @@ final class HelpersTests: XCTestCase {
 public class Person: Codable {
     public var name: String
     public var age: Int
-
+    public var favoritePet: String
+    public var bestFriend: String?
     public var child: Person?
 
 }
