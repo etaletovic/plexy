@@ -14,7 +14,7 @@ public extension Plexy.Tv {
 
         private init() {}
 
-        public static func get(completionHandler: @escaping (ServersResponse?) -> Void) {
+        public static func get(completionHandler: @escaping ([Resource]?) -> Void) {
 
             let authToken = Plexy.Auth.token
 

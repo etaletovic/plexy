@@ -41,4 +41,24 @@ final class PlexyTvTests: XCTestCase {
         XCTAssertFalse(res.user.authToken.isEmpty)
 
     }
+    
+    func testGetResources() {
+
+        let gotResponse = expectation(description: "Got Response")
+        var response: [Resource]?
+
+        Plexy.Tv.Resources.get { resources in
+            response = resources
+            gotResponse.fulfill()
+        }
+
+        waitForExpectations(timeout: 5, handler: nil)
+
+        guard let res = response else {
+            XCTFail("Response is nil")
+            return
+        }
+
+        XCTAssertTrue(res.count > 0, "No resources retreived")
+    }
 }
