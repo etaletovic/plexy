@@ -34,26 +34,23 @@ public struct Resource: Codable {
         self.publicAddress = try container.decode(String.self, forKey: .publicAddress)
         self.connections = try container.decode([Connection].self, forKey: .connections)
 
-        let providesCsv = try container.decode(String.self, forKey: .provides)
-
         var newProvides: ProvidesOptions = .none
 
-        providesCsv.split(separator: ",").forEach({value in
-
-            let str = ProvidesOptions.getOptionBy(name: String(value))
-
-            newProvides.update(with: str)
-        })
+        try container
+            .decode(String.self, forKey: .provides)
+            .split(separator: ",")
+            .map({part in ProvidesOptions.getOptionBy(name: String(part)) })
+            .forEach({ value in newProvides.insert(value) })
 
         self.provides = newProvides
     }
 
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
+
         try container.encode(self.name, forKey: .name)
         try container.encode(self.publicAddress, forKey: .publicAddress)
         try container.encode(self.connections, forKey: .connections)
-
         try container.encode(self.provides.toCsv(), forKey: .provides)
 
     }
@@ -91,20 +88,18 @@ public struct ProvidesOptions: OptionSet, Codable {
     public static let all: ProvidesOptions = [.server, .player, .pubSubPlayer, .controller, .client]
     public static let none: ProvidesOptions = []
 
-    private static let allOptionsList: [ProvidesOptions] = [.server, .player, .pubSubPlayer, .controller, .client]
+    private static let allOptionsList: [ ProvidesOptions ] = [.server, .player, .pubSubPlayer, .controller, .client]
 
     public static func getOptionBy(name: String) -> ProvidesOptions {
-        return allOptionsList.first(where: { opt in
+        allOptionsList.first(where: { opt in
             opt.stringValue.lowercased() == name.lowercased()
         }) ?? none
     }
 
     public func toCsv() -> String {
-
-        var opts: [String] = ProvidesOptions.allOptionsList
+        ProvidesOptions.allOptionsList
             .filter({ opt in self.contains(opt) })
             .map({ opt in opt.stringValue })
-
-        return opts.joined(separator: ",")
+            .joined(separator: ",")
     }
 }
