@@ -60,5 +60,45 @@ final class PlexyTvTests: XCTestCase {
         }
 
         XCTAssertTrue(res.count > 0, "No resources retreived")
+
+        let hasEmptyConnections = res.contains(where: {resource in
+            resource.connections.isEmpty
+        })
+
+        XCTAssertFalse(hasEmptyConnections, "Connections array not valid")
+
+    }
+
+    func testSerializeOptionSet() {
+
+        let resource = Resource(name: "swift-server",
+                                provides: [.server, .client],
+                                publicAddress: "8.8.8.8",
+                                connections: [
+                                    Connection(address: "127.0.0.1",
+                                               port: 8080,
+                                               uri: "https://swift.org",
+                                               local: true,
+                                               relay: true)]
+        )
+
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+
+        guard let data = try? encoder.encode(resource) else {
+            XCTFail("encode() failed")
+            return
+        }
+
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCaseAndPascalCase
+
+        guard let decoded = try? decoder.decode(Resource.self, from: data) else {
+            XCTFail("Failed to decode json")
+            return
+        }
+
+        XCTAssertTrue(decoded.provides == [.client, .server])
+        XCTAssertFalse(decoded.provides == [.client, .server, .player])
     }
 }

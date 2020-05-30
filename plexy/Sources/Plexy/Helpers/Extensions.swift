@@ -14,7 +14,7 @@ extension StringProtocol {
 
 extension JSONDecoder.KeyDecodingStrategy {
 
-    static var convertFromSnakeCaseAndCamelCase: JSONDecoder.KeyDecodingStrategy {
+    static var convertFromSnakeCaseAndPascalCase: JSONDecoder.KeyDecodingStrategy {
         .custom { keys in
 
             let key = keys.last!

@@ -51,7 +51,7 @@ public struct Requests {
 
     private static func initDecoder() -> JSONDecoder {
         let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCaseAndCamelCase
+        decoder.keyDecodingStrategy = .convertFromSnakeCaseAndPascalCase
         return decoder
     }
 
