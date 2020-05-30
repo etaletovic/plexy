@@ -41,7 +41,7 @@ final class PlexyTvTests: XCTestCase {
         XCTAssertFalse(res.user.authToken.isEmpty)
 
     }
-    
+
     func testGetResources() {
 
         let gotResponse = expectation(description: "Got Response")

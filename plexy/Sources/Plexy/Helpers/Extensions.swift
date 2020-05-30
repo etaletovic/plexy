@@ -13,18 +13,18 @@ extension StringProtocol {
 }
 
 extension JSONDecoder.KeyDecodingStrategy {
-    
+
     static var convertFromSnakeCaseAndCamelCase: JSONDecoder.KeyDecodingStrategy {
         .custom { keys in
-            
+
             let key = keys.last!
-            
+
             if let intValue = key.intValue {
                 return AnyKey(intValue: intValue)!
             }
-            
+
             let decoded = toCamelCase(key.stringValue)
-            
+
             return AnyKey(stringValue: decoded)!
         }
     }
@@ -35,7 +35,7 @@ extension JSONDecoder.KeyDecodingStrategy {
             .joined()
             .decapitalized
     }
-    
+
     struct AnyKey: CodingKey {
         var stringValue: String
 

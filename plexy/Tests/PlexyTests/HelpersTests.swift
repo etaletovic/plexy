@@ -63,9 +63,7 @@ final class HelpersTests: XCTestCase {
 
         XCTAssert(child.name == "Y")
         XCTAssert(child.age == 5)
-
     }
-
 }
 
 public class Person: Codable {

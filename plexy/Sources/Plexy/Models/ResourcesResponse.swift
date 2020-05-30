@@ -11,4 +11,14 @@ public struct Resource: Codable {
     let name: String
     let provides: String
     let publicAddress: String
+    let connections: [Connection]
+}
+
+public struct Connection: Codable {
+    let address: String
+    let port: Int
+    let uri: String
+    let local: Bool
+    let relay: Bool
+    let ipv6: Bool
 }
