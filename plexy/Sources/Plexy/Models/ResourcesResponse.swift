@@ -13,21 +13,21 @@ public struct Resource: Codable {
     public let publicAddress: String
     public let connections: [Connection]
 
+    public struct Connection: Codable {
+        public let address: String
+        public let port: Int
+        public let uri: String
+        public  let local: Bool
+        public let relay: Bool
+    }
+
     enum CodingKeys: String, CodingKey {
         case name, provides, publicAddress, connections
     }
+}
 
-    public init(name: String,
-                provides: ProvidesOptions,
-                publicAddress: String,
-                connections: [Connection]) {
-        self.name = name
-        self.provides = provides
-        self.publicAddress = publicAddress
-        self.connections = connections
-    }
-
-    public init(from decoder: Decoder) throws {
+public extension Resource {
+    init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
 
         self.name = try container.decode(String.self, forKey: .name)
@@ -45,23 +45,14 @@ public struct Resource: Codable {
         self.provides = newProvides
     }
 
-    public func encode(to encoder: Encoder) throws {
+    func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
         try container.encode(self.name, forKey: .name)
         try container.encode(self.publicAddress, forKey: .publicAddress)
         try container.encode(self.connections, forKey: .connections)
         try container.encode(self.provides.toCsv(), forKey: .provides)
-
     }
-}
-
-public struct Connection: Codable {
-    public let address: String
-    public let port: Int
-    public let uri: String
-    public  let local: Bool
-    public let relay: Bool
 }
 
 public struct ProvidesOptions: OptionSet, Codable {

@@ -75,7 +75,7 @@ final class PlexyTvTests: XCTestCase {
                                 provides: [.server, .client],
                                 publicAddress: "8.8.8.8",
                                 connections: [
-                                    Connection(address: "127.0.0.1",
+                                    Resource.Connection(address: "127.0.0.1",
                                                port: 8080,
                                                uri: "https://swift.org",
                                                local: true,
