@@ -12,9 +12,16 @@ extension StringProtocol {
     var capitalized: String { prefix(1).uppercased() + dropFirst() }
 }
 
+extension JSONDecoder {
+    public convenience init(_ keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy) {
+        self.init()
+        self.keyDecodingStrategy = keyDecodingStrategy
+    }
+}
+
 extension JSONDecoder.KeyDecodingStrategy {
 
-    static var convertFromSnakeCaseAndPascalCase: JSONDecoder.KeyDecodingStrategy {
+    static var convertFromAndUpperCamelSnakeCase: JSONDecoder.KeyDecodingStrategy {
         .custom { keys in
 
             let key = keys.last!
@@ -23,12 +30,12 @@ extension JSONDecoder.KeyDecodingStrategy {
                 return AnyKey(intValue: intValue)!
             }
 
-            let decoded = toCamelCase(key.stringValue)
+            let decoded = camelCased(key.stringValue)
 
             return AnyKey(stringValue: decoded)!
         }
     }
-    private static func toCamelCase(_ value: String) -> String {
+    private static func camelCased(_ value: String) -> String {
         value
             .split(separator: "_", omittingEmptySubsequences: true)
             .map { part in part.capitalized }
@@ -38,17 +45,15 @@ extension JSONDecoder.KeyDecodingStrategy {
 
     struct AnyKey: CodingKey {
         var stringValue: String
+        var intValue: Int?
 
         init?(stringValue: String) {
             self.stringValue = stringValue
         }
 
-        var intValue: Int?
-
         init?(intValue: Int) {
             self.intValue = intValue
             self.stringValue = String(intValue)
         }
-
     }
 }

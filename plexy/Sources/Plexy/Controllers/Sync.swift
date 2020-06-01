@@ -7,7 +7,7 @@
 
 import Foundation
 import Alamofire
-
+//TODO: remove Alamofire dependency from controllers
 public extension Part {
     func download(token: String = "", saveTo: URL, _ progress: @escaping (Int) -> Void) {
 

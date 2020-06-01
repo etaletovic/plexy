@@ -10,7 +10,7 @@ import Alamofire
 
 public struct Requests {
 
-    static var decoder: JSONDecoder = initDecoder()
+    static var decoder: JSONDecoder = JSONDecoder(.convertFromAndUpperCamelSnakeCase)
 
     public static func request<T: Codable>(
         _ convertible: URLConvertible,
@@ -48,11 +48,4 @@ public struct Requests {
                 completionHandler(result)
             }
     }
-
-    private static func initDecoder() -> JSONDecoder {
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCaseAndPascalCase
-        return decoder
-    }
-
 }

@@ -90,8 +90,7 @@ final class PlexyTvTests: XCTestCase {
             return
         }
 
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCaseAndPascalCase
+        let decoder = JSONDecoder(.convertFromAndUpperCamelSnakeCase)
 
         guard let decoded = try? decoder.decode(Resource.self, from: data) else {
             XCTFail("Failed to decode json")
