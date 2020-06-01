@@ -5,8 +5,6 @@
 //  Created by Emir Taletovic on 4/29/20.
 //
 
-import Foundation
-
 public struct Resource {
     public let name: String
     public let provides: ProvidesOptions

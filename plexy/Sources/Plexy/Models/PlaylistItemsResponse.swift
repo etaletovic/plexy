@@ -5,8 +5,6 @@
 //  Created by Emir Taletovic on 5/1/20.
 //
 
-import Foundation
-
 public struct PlaylistItemsResponse: Codable {
     let mediaContainer: PlaylistItemsContainer
 }
